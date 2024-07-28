@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./srcs/nginx
+    container_name: nginx-container
+    ports:
+      - "443:443"
+    volumes:
+      - ./srcs/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./srcs/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - wordpress_data:/var/www/wordpress
+      - ./srcs/nginx/conf/entrypoint.sh:/entrypoint.sh
+      - /etc/nginx/ssl/inception.crt:/etc/nginx/ssl/inception.crt
+      - /etc/nginx/ssl/inception.key:/etc/nginx/ssl/inception.key
+    entrypoint: /entrypoint.sh
+    depends_on:
+      - wordpress
+    networks:
+      - my-network
+
+  wordpress:
+    build: ./srcs/wordpress
+    container_name: wordpress-container
+    environment:
+      SQL_DATABASE: ${SQL_DATABASE}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+      WP_URL: ${WP_URL}
+      WP_TITLE: ${WP_TITLE}
+      WP_USER: ${WP_USER}
+      WP_PASSWORD: ${WP_PASSWORD}
+      WP_EMAIL: ${WP_EMAIL}
+      WP_USER2: ${WP_USER2}
+      WP_PASSWORD2: ${WP_PASSWORD2}
+      WP_EMAIL2: ${WP_EMAIL2}
+    volumes:
+      - wordpress_data:/var/www/wordpress
+    networks:
+      - my-network
+    depends_on:
+      - mariadb
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+
+  mariadb:
+    build: ./srcs/mariadb
+    container_name: mariadb-container
+    environment:
+      SQL_ROOT_PASSWORD: ${SQL_ROOT_PASSWORD}
+      SQL_DATABASE: ${SQL_DATABASE}
+      SQL_USER: ${SQL_USER}
+      SQL_PASSWORD: ${SQL_PASSWORD}
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  wordpress_data:
