@@ -40,4 +40,4 @@ COPY conf/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 777 /usr/local/bin/entrypoint.sh
 
 # Set the entrypoint
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["/usr/local/bin/entrypoint.sh"]
