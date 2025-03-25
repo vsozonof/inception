@@ -8,7 +8,6 @@ COPY conf/auto_config.sh /usr/local/bin/auto_config.sh
 RUN chmod +x /usr/local/bin/auto_config.sh
 RUN chmod 644 /etc/mysql/mariadb.conf.d/50-server.cnf
 
-# Create the directory for the Unix socket
 RUN mkdir -p /run/mysqld && chown -R mysql:mysql /run/mysqld
 
 

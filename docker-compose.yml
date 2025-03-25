@@ -17,7 +17,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      - my-network
+      - inception
 
   wordpress:
     build: ./srcs/wordpress
@@ -38,7 +38,7 @@ services:
     volumes:
       - wordpress_data:/var/www/wordpress
     networks:
-      - my-network
+      - inception
     depends_on:
       - mariadb
     expose:
@@ -55,11 +55,28 @@ services:
       SQL_USER: ${SQL_USER}
       SQL_PASSWORD: ${SQL_PASSWORD}
     networks:
-      - my-network
+      - inception
 
 networks:
-  my-network:
+  inception:
     driver: bridge
 
 volumes:
   wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/vsozonof/data/wordpress
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/vsozonof/data/mariadb
+  nginx_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/vsozonof/data/nginx
