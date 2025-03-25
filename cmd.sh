@@ -19,4 +19,7 @@ sudo apt-get update
 
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-
+mkdir -p /home/vsozonof/data/nginx
+mkdir -p /home/vsozonof/data/nginx/html
+mkdir -p /home/vsozonof/data/wordpress
+mkdir -p /home/vsozonof/data/mariadb
