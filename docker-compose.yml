@@ -7,13 +7,12 @@ services:
     ports:
       - "443:443"
     volumes:
-      - /home/vsozonof/data/nginx:/etc/nginx
-      - /home/vsozonof/data/nginx/html:/var/www/wordpress
       - ./srcs/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./srcs/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./srcs/nginx/conf/nginx.sh:/nginx.sh
-      - /etc/nginx/ssl/inception.crt:/etc/nginx/ssl/inception.crt
-      - /etc/nginx/ssl/inception.key:/etc/nginx/ssl/inception.key
+       - ./srcs/nginx/conf/default.conf:/etc/nginx/conf.d/default.conf:ro
+       - wordpress_data:/var/www/wordpress
+       - ./srcs/nginx/conf/entrypoint.sh:/entrypoint.sh
+       - /etc/nginx/ssl/inception.crt:/etc/nginx/ssl/inception.crt
+       - /etc/nginx/ssl/inception.key:/etc/nginx/ssl/inception.key
     depends_on:
       - wordpress
     networks:
@@ -36,7 +35,7 @@ services:
       WP_PASSWORD2: ${WP_PASSWORD2}
       WP_EMAIL2: ${WP_EMAIL2}
     volumes:
-      - /home/vsozonof/data/wordpress:/var/www/wordpress
+      - wordpress_data:/var/www/wordpress
     networks:
       - inception
     depends_on:
@@ -56,8 +55,6 @@ services:
       SQL_PASSWORD: ${SQL_PASSWORD}
     networks:
       - inception
-    volumes:
-      - /home/vsozonof/data/mariadb:/var/lib/mysql
 
 networks:
   inception:

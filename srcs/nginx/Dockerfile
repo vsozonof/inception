@@ -12,6 +12,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 
 RUN chmod 644 /etc/nginx/ssl/inception.key
 RUN chmod 644 /etc/nginx/ssl/inception.crt
+RUN chmod 644 /etc/nginx/snippets/fastcgi-php.conf
 
 RUN mkdir -p /var/run/nginx
 
