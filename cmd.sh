@@ -12,6 +12,7 @@ if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
 fi
 
 apt update && apt upgrade -y
+
 apt install -y make zsh ufw openssh-server curl ca-certificates
 
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
@@ -32,7 +33,20 @@ tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 apt update
 apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
 systemctl enable --now docker
 
-echo "✅ Setup complete! OpenSSH Server and Docker are installed and running."
+apt remove --purge -y firefox-esr
+apt autoremove -y
+
+wget -qO- https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | tee /usr/share/keyrings/google-chrome.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list
+apt update
+apt install -y google-chrome-stable
+
+mkdir -p /home/vsozonof/data/wordpress
+mkdir -p /home/vsozonof/data/mariadb
+mkdir -p /home/vsozonof/data/nginx
+chmod -R 777 /home/vsozonof/data
+
+
+echo "✅ Setup complete! OpenSSH Server, Docker, and Google Chrome are installed. Firefox has been removed."

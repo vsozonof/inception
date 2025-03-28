@@ -25,5 +25,11 @@ clean: down
 ps:
 	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) ps
 
-exec:
-	docker exec -it wordpress-container /bin/bash
+exec-wp:
+	docker exec -it wordpress /bin/bash
+
+exec-nginx:
+	docker exec -it nginx /bin/bash
+
+exec-mariadb:
+	docker exec -it mariadb /bin/bash
