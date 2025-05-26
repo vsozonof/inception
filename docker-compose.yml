@@ -1,5 +1,6 @@
 services:
   nginx:
+    restart: always
     build: ./srcs/nginx
     container_name: nginx
     ports:
@@ -12,6 +13,7 @@ services:
       - inception
 
   wordpress:
+    restart: always
     build: ./srcs/wordpress
     container_name: wordpress
     environment:
@@ -35,10 +37,9 @@ services:
       - mariadb
     expose:
       - "9000"
-    ports:
-      - "9000:9000"
 
   mariadb:
+    restart: always
     build: ./srcs/mariadb
     container_name: mariadb
     environment:

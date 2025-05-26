@@ -14,6 +14,10 @@ RUN chown -R www-data:www-data /var/www/html
 
 COPY ./conf/default.conf /etc/nginx/conf.d/default.conf
 
+RUN mkdir -p /var/www/wordpress && \
+    chmod 755 /var/www/wordpress && \
+    chown -R www-data:www-data /var/www/wordpress
+
 EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]

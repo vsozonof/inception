@@ -1,29 +1,26 @@
-DOCKER_COMPOSE = docker compose
-COMPOSE_FILE = docker-compose.yml
-
 .PHONY: all build up down restart logs clean
 
 all: up
 
 build:
-	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) build
+	docker compose -f docker-compose.yml build
 
 up:
-	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) up -d
+	docker compose -f docker-compose.yml up -d
 
 down:
-	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) down
+	docker compose -f docker-compose.yml down
 
 restart: down up
 
 logs:
-	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) logs -f
+	docker compose -f docker-compose.yml logs -f
 
 clean: down
-	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) down -v --remove-orphans
+	docker compose -f docker-compose.yml down -v --remove-orphans
 
 ps:
-	$(DOCKER_COMPOSE) -f $(COMPOSE_FILE) ps
+	docker compose -f docker-compose.yml ps
 
 exec-wp:
 	docker exec -it wordpress /bin/bash
